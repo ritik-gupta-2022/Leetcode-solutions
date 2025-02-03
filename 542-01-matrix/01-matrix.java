@@ -1,29 +1,29 @@
 class Solution {
-    public int[][] updateMatrix(int[][] arr) {
-        int m = arr.length, n = arr[0].length;
-        Queue<int[]> q= new LinkedList<>();
+    public int[][] updateMatrix(int[][] mat) {
+        int m = mat.length , n =mat[0].length;
+        int vis[][] = new int[m][n];
+        Queue<int[]> q = new LinkedList<>();
+
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                if(arr[i][j] == 0){
-                    q.offer(new int[]{i, j});
-                }
-                else arr[i][j]=-1;
+                if(mat[i][j]==0) 
+                    q.offer(new int[]{i,j});
             }
         }
-        int d[][] = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+        
+        int dir[][] = {{0,1}, {1,0}, {0,-1}, {-1,0}};
 
         while(!q.isEmpty()){
-            int temp[] = q.poll();
-            int x = temp[0] , y= temp[1];
-            for(int a[]:d){
-                int nx = x + a[0], ny = y + a[1];
-                if(nx >= 0 && nx < m && ny >= 0 && ny < n && arr[nx][ny] == -1){
-                    arr[nx][ny] = arr[x][y]+1;
+            int x = q.peek()[0] , y = q.poll()[1];
+            for(int d[]:dir){
+                int nx = x+d[0] , ny =y+d[1];
+                if(nx >= 0 && nx < m && ny >= 0 && ny < n && mat[nx][ny] == 1 && vis[nx][ny]==0){
+                    mat[nx][ny] = mat[x][y]+1;
+                    vis[nx][ny]=1;
                     q.offer(new int[]{nx, ny});
                 }
             }
         }
-        
-        return arr;
+        return mat;
     }
 }
