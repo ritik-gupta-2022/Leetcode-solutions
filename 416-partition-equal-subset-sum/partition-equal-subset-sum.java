@@ -1,30 +1,27 @@
 class Solution {
-    public boolean helper(int arr[], int i, int s, int total, int dp[][]){
-        if(i>=arr.length && s==total/2)
+    public boolean helper(int arr[], int i, int sum, int target, int dp[][]){
+        if(sum==target/2){
             return true;
-        if(s>total/2 || i>=arr.length)
-            return false;
-        if(dp[i][s]!=-1) return dp[i][s]==1;
+        }
+        if(i>=arr.length || sum>target/2) return false;
 
-        boolean take = false , not = false;
+        if(dp[i][sum]!=-1) return dp[i][sum]==1;
 
-        take=helper(arr,i+1,s+arr[i],total,dp);
-        
-        not=helper(arr,i+1,s,total,dp);
+        boolean take = helper(arr, i+1, sum+arr[i], target, dp);
+        boolean not = helper(arr, i+1, sum, target, dp);
 
-         dp[i][s]=take||not?1:0;
-         return dp[i][s]==1;
+        dp[i][sum]=take||not?1:0;
+        return dp[i][sum]==1;
+
     }
     public boolean canPartition(int[] nums) {
-        int total=0;
-        for(int i:nums)
-            total+=i;
+        int s=0;
+        for(int i:nums) s+=i;
+        if(s%2!=0) return false;
 
-        if(total%2!=0) return false;
-
-        int dp[][] = new int[nums.length][total/2+1];
+        int dp[][] = new int[nums.length][s/2 + 1];
         for(int d[]:dp) Arrays.fill(d,-1);
 
-        return helper(nums,0,0,total,dp);
+        return helper(nums,0,0,s,dp);
     }
 }
