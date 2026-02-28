@@ -10,8 +10,8 @@ class Solution {
                 n3 = st.pop();
             }
             if(st.isEmpty()) n2 = nums[i];
-            st.push(nums[i]);
             if(nums[i]<n3 && n3<n2) return true;
+            st.push(nums[i]);
         }
         return false;
     }
