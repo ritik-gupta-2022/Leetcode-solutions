@@ -16,13 +16,13 @@ class Solution {
         {
             arr[s.charAt(r)-'A']++;
             int val=replace(arr);
-            while(val>k)
+            if(val>k)
             {
                 arr[s.charAt(l)-'A']--;
                 l++;
-                val = replace(arr);
+                // val = replace(arr);
             }
-            // if(replace(arr)<=k)
+            if(replace(arr)<=k)
             ans=Math.max(r-l+1, ans);
             r++;
         }
