@@ -1,7 +1,7 @@
 // just figured out binsary search. Look at the output max(9, 12, 12, 12) here we have to minimize the max so obviously we can think og binary search on answers.
 // val * k(k+1)/2 ≤ sec
-// k(k+1) ≤ (2sec)/val
-// k² + k ≤ X  ,  X = (2sec)/val;
+// k(k+1) ≤ (2sec)/arr[i]
+// k² + k ≤ X  ,  X = (2sec)/arr[i];
 // k² + k - X ≤ 0
 // k = floor((-1 + sqrt(1 + 4*X)) / 2) shree dharacharya
 class Solution {
@@ -24,7 +24,10 @@ class Solution {
         long cut = 0;
         for(int i = 0; i < arr.length; i++){
 
-            cut += helper(height, sec, arr[i]);
+            // cut += helper(height, sec, arr[i]);
+            long x = (2*sec)/arr[i];
+            long k = (long)Math.floor((-1 + Math.sqrt(1 + 4*x)) / 2);
+            cut+=k;
             if(cut >= height) return true;
         }
 
