@@ -1,19 +1,21 @@
 class Solution {
-    List<String> ls;
-    public void helper(String ans, char last, int n){
+    int c=0;
+    String res;
+    public void helper(String ans, char last, int n, int k){
         if(ans.length()==n){
-            ls.add(ans);
+            c++;
+            if(c==k) res=ans;
             return;
         }
-        if(last!='a') helper(ans+'a','a',n);
-        if(last!='b') helper(ans+'b','b',n);
-        if(last!='c') helper(ans+'c','c',n);
+
+        if(last!='a') helper(ans+'a','a',n,k);
+        if(last!='b') helper(ans+'b','b',n,k);
+        if(last!='c') helper(ans+'c','c',n,k);
 
         return;
     }
     public String getHappyString(int n, int k) {
-        ls = new ArrayList<>();
-        helper("",'.',n);
-        return ls.size() < k ? "" : ls.get(k-1);
+        helper("",'.',n,k);
+        return c < k ? "" : res;
     }
 }
