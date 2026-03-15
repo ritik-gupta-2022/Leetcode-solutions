@@ -13,17 +13,20 @@ class Solution {
 
     }
     public int rob(int[] nums) {
-        int dp[] = new int[nums.length+1];
-        dp[0] = nums[0];
+        int prev = nums[0];
+        int prev2 = 0;
+        int curr=0;
         int neg=0;
+
         
         for(int i=1; i<nums.length; i++){
-            int rob = -1;
-                rob = nums[i] + (i-2<0 ? neg : dp[i-2]);
-            int notrob = dp[i-1];
+            int rob = nums[i] + prev2;
+            int notrob = prev;
 
-            dp[i] = Math.max(rob,notrob);
+            curr = Math.max(rob,notrob);
+            prev2 = prev;
+            prev = curr;
         }
-        return dp[nums.length-1];
+        return prev;
     }
 }
