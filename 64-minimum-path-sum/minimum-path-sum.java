@@ -15,7 +15,20 @@ class Solution {
     public int minPathSum(int[][] grid) {
         int m = grid.length, n = grid[0].length;
         dp = new int[m][n];
-        for(int i[]: dp) Arrays.fill(i,-1);
-        return helper(grid,m-1,n-1);
+
+        dp[0][0] = grid[0][0];
+        
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(i==0 && j==0) continue;
+
+                int a = 10000000, b=10000000;
+                if(i>0) a = dp[i-1][j];
+                if(j>0) b = dp[i][j-1];
+
+                dp[i][j] = grid[i][j] + Math.min(a,b);
+            }
+        }
+        return dp[m-1][n-1];
     }
 }
