@@ -25,9 +25,60 @@ class Solution {
     public int cherryPickup(int[][] arr) {
         int m = arr.length, n = arr[0].length;
         dp = new int[m][n][n];
-        for(int i[][]:dp){
-            for(int k[]:i) Arrays.fill(k,-1);
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                for(int k = 0; k < n; k++){
+                    dp[i][j][k] = -1000000;
+                }
+            }
         }
-        return helper(arr,0,0,n-1);
+
+        dp[0][0][n-1] = arr[0][0] + (n-1 == 0 ? 0 : arr[0][n-1]);
+
+
+        for(int i=1; i<m; i++){
+            for(int j=0; j<n; j++){
+                for(int k=0; k<n; k++){
+                    int ans = -1000000, val=0;
+                    if(j>0)
+                    {
+                            ans = Math.max(ans, dp[i-1][j-1][k]);
+                        if(k<n-1)
+                            ans = Math.max(ans, dp[i-1][j-1][k+1]);
+                        if(k>0)
+                            ans = Math.max(ans, dp[i-1][j-1][k-1]);
+                    }
+                    if(j<n-1)
+                    {
+                            ans = Math.max(ans,dp[i-1][j+1][k]);
+                        if(k<n-1)
+                            ans = Math.max(ans,dp[i-1][j+1][k+1]);
+                        if(k>0)
+                            ans = Math.max(ans,dp[i-1][j+1][k-1]);
+                    }
+                        ans = Math.max(ans,dp[i-1][j][k]);
+                    if(k<n-1)
+                        ans = Math.max(ans,dp[i-1][j][k+1]);
+                    if(k>0)
+                        ans = Math.max(ans,dp[i-1][j][k-1]);
+
+                    if(ans == -1000000) continue;
+                    
+                    if(j==k)
+                        ans+=arr[i][j];
+                    else 
+                        ans+=arr[i][j] + arr[i][k];
+
+                    dp[i][j][k] = ans;
+                }
+            }
+        }
+        int ans = -1;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++)
+                ans = Math.max(ans,dp[m-1][i][j]);
+        }
+        return ans;
     }
 }
